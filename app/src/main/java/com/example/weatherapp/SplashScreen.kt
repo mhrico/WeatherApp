@@ -2,11 +2,13 @@ package com.example.weatherapp
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.widget.Toast
@@ -36,7 +38,13 @@ class SplashScreen : AppCompatActivity() {
                     if(location == null){
                         newLocation()
                     }else{
-                        Log.i("Location", location.longitude.toString())
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            val intent = Intent(this, MainActivity::class.java)
+                            intent.putExtra("lat", location.latitude.toString())
+                            intent.putExtra("long", location.longitude.toString())
+                            startActivity(intent)
+                            finish()
+                        }, 2000)
                     }
                 }
             }else{
